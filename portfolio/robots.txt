@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://chaitanyapatil.dev/sitemap.xml
-Sitemap: https://chaitanyapatil.dev/feed.xml
-Sitemap: https://chaitanyapatil.dev/atom.xml
+Sitemap: https://chaitanyapatil.online/sitemap.xml
+Sitemap: https://chaitanyapatil.online/feed.xml
+Sitemap: https://chaitanyapatil.online/atom.xml

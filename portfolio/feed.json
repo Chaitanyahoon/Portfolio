@@ -1,16 +1,16 @@
 {
   "version": "https://jsonfeed.org/version/1.1",
   "title": "Chaitanya Patil",
-  "home_page_url": "https://chaitanyapatil.dev/",
-  "feed_url": "https://chaitanyapatil.dev/feed.json",
+  "home_page_url": "https://chaitanyapatil.online/",
+  "feed_url": "https://chaitanyapatil.online/feed.json",
   "description": "Portfolio updates, projects, and engineering insights from Chaitanya Patil.",
   "language": "en-US",
-  "icon": "https://chaitanyapatil.dev/assets/og.png",
-  "favicon": "https://chaitanyapatil.dev/assets/favicon/favicon.ico",
+  "icon": "https://chaitanyapatil.online/assets/og.png",
+  "favicon": "https://chaitanyapatil.online/assets/favicon/favicon.ico",
   "author": {
     "name": "Chaitanya Patil",
-    "url": "https://chaitanyapatil.dev/",
-    "avatar": "https://chaitanyapatil.dev/assets/og.png"
+    "url": "https://chaitanyapatil.online/",
+    "avatar": "https://chaitanyapatil.online/assets/og.png"
   },
   "items": [
     {
@@ -18,7 +18,7 @@
       "url": "https://streetbitego.vercel.app/",
       "title": "StreetBite — Street Food Discovery Platform",
       "content_text": "Full-stack street food discovery platform with vendor loyalty, community forums, and real-time geolocation. Built with React, Spring Boot, and MySQL.",
-      "image": "https://chaitanyapatil.dev/assets/streetbite_ui.png",
+      "image": "https://chaitanyapatil.online/assets/streetbite_ui.png",
       "date_published": "2026-04-21T00:00:00Z"
     },
     {
@@ -26,7 +26,7 @@
       "url": "https://github.com/Chaitanyahoon/focus-arena",
       "title": "Focus Arena — Gamified Productivity RPG",
       "content_text": "RPG-inspired productivity app with quest systems, boss battles, and guild raids. Built with Next.js, .NET 8, SignalR, and MySQL.",
-      "image": "https://chaitanyapatil.dev/assets/focus_arena_ui.png",
+      "image": "https://chaitanyapatil.online/assets/focus_arena_ui.png",
       "date_published": "2026-04-21T00:00:00Z"
     },
     {
@@ -34,20 +34,20 @@
       "url": "https://github.com/Chaitanyahoon/ScamSentry",
       "title": "ScamSentry — AI-Powered Scam Detection",
       "content_text": "Real-time scam detection engine analyzing URLs, emails, and phone numbers using ML classifiers and threat intelligence APIs.",
-      "image": "https://chaitanyapatil.dev/assets/scam_sentry_ui.png",
+      "image": "https://chaitanyapatil.online/assets/scam_sentry_ui.png",
       "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://chaitanyapatil.dev/",
-      "url": "https://chaitanyapatil.dev/",
+      "id": "https://chaitanyapatil.online/",
+      "url": "https://chaitanyapatil.online/",
       "title": "Portfolio Home",
       "content_text": "Chaitanya Patil's portfolio — Full Stack Developer specializing in Java, Spring Boot, React, and .NET.",
-      "image": "https://chaitanyapatil.dev/assets/og.png",
+      "image": "https://chaitanyapatil.online/assets/og.png",
       "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://chaitanyapatil.dev/resume/",
-      "url": "https://chaitanyapatil.dev/resume/",
+      "id": "https://chaitanyapatil.online/resume/",
+      "url": "https://chaitanyapatil.online/resume/",
       "title": "Resume",
       "content_text": "Professional resume of Chaitanya Patil — Full Stack Developer.",
       "date_published": "2026-04-21T00:00:00Z"
