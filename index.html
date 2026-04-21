@@ -2673,7 +2673,7 @@
         <div class="menu-overlay__main">
           <ul>
             <li>
-              <a id="scrollToTop" data-text-anim>HOME</a>
+              <a id="menuScrollToTop" data-text-anim>HOME</a>
             </li>
             <li>
               <a href="#work" data-text-anim>WORK</a>
@@ -3753,15 +3753,21 @@
     // Scroll to top button
     (function() {
       const scrollToTopBtn = document.getElementById('scrollToTop');
+      const menuScrollToTopBtn = document.getElementById('menuScrollToTop');
       
+      function goToTop() {
+        if (window.SmoothScroll) {
+          window.SmoothScroll.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
       if (scrollToTopBtn) {
-        scrollToTopBtn.addEventListener('click', function() {
-          if (window.SmoothScroll) {
-            window.SmoothScroll.scrollTo(0);
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        });
+        scrollToTopBtn.addEventListener('click', goToTop);
+      }
+      if (menuScrollToTopBtn) {
+        menuScrollToTopBtn.addEventListener('click', goToTop);
       }
       
       // Update work section link
