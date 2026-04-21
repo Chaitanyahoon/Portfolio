@@ -1,110 +1,56 @@
 {
   "version": "https://jsonfeed.org/version/1.1",
-  "title": "Humaira Ambreen",
-  "home_page_url": "https://humairaambreen.github.io/",
-  "feed_url": "https://humairaambreen.github.io/feed.json",
-  "description": "Portfolio updates, support information, and resume updates from Humaira Ambreen.",
+  "title": "Chaitanya Patil",
+  "home_page_url": "https://chaitanyapatil.dev/",
+  "feed_url": "https://chaitanyapatil.dev/feed.json",
+  "description": "Portfolio updates, projects, and engineering insights from Chaitanya Patil.",
   "language": "en-US",
-  "icon": "https://humairaambreen.github.io/assets/og.png",
-  "favicon": "https://humairaambreen.github.io/assets/favicon/favicon.ico",
+  "icon": "https://chaitanyapatil.dev/assets/og.png",
+  "favicon": "https://chaitanyapatil.dev/assets/favicon/favicon.ico",
   "author": {
-    "name": "Humaira Ambreen",
-    "url": "https://humairaambreen.github.io/",
-    "avatar": "https://humairaambreen.github.io/assets/og.png"
+    "name": "Chaitanya Patil",
+    "url": "https://chaitanyapatil.dev/",
+    "avatar": "https://chaitanyapatil.dev/assets/og.png"
   },
   "items": [
     {
-      "id": "https://luveian.com",
-      "url": "https://luveian.com",
-      "title": "Luveian — Full-Stack Internship Project",
-      "content_text": "Production web platform work: full-stack development, UX/UI design, and performance optimization.",
-      "image": "https://raw.githubusercontent.com/aryansrao/luveian/refs/heads/main/assets/logowbg.jpeg",
-      "date_published": "2024-10-01T00:00:00Z",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://raw.githubusercontent.com/aryansrao/luveian/refs/heads/main/assets/logowbg.jpeg",
-          "mime_type": "image/jpeg",
-          "title": "Luveian project cover"
-        }
-      ]
+      "id": "https://streetbitego.vercel.app/",
+      "url": "https://streetbitego.vercel.app/",
+      "title": "StreetBite — Street Food Discovery Platform",
+      "content_text": "Full-stack street food discovery platform with vendor loyalty, community forums, and real-time geolocation. Built with React, Spring Boot, and MySQL.",
+      "image": "https://chaitanyapatil.dev/assets/streetbite_ui.png",
+      "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://lostandfound-0brr.onrender.com/",
-      "url": "https://lostandfound-0brr.onrender.com/",
-      "title": "Lost & Found — Campus PWA",
-      "content_text": "Progressive web app for campus lost & found workflows with real-time sync and offline support.",
-      "image": "https://humairaambreen.github.io/assets/l&f.png",
-      "date_published": "2025-07-01T00:00:00Z",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://humairaambreen.github.io/assets/l&f.png",
-          "mime_type": "image/png",
-          "title": "Lost and Found project cover"
-        }
-      ]
+      "id": "https://github.com/Chaitanyahoon/focus-arena",
+      "url": "https://github.com/Chaitanyahoon/focus-arena",
+      "title": "Focus Arena — Gamified Productivity RPG",
+      "content_text": "RPG-inspired productivity app with quest systems, boss battles, and guild raids. Built with Next.js, .NET 8, SignalR, and MySQL.",
+      "image": "https://chaitanyapatil.dev/assets/focus_arena_ui.png",
+      "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://kec-live.netlify.app/",
-      "url": "https://kec-live.netlify.app/",
-      "title": "KEC — College Resource Portal",
-      "content_text": "Lightweight college resource hub with accessibility-first design and in-browser ID card generation.",
-      "image": "https://humairaambreen.github.io/assets/kec.png",
-      "date_published": "2024-12-01T00:00:00Z",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://humairaambreen.github.io/assets/kec.png",
-          "mime_type": "image/png",
-          "title": "KEC project cover"
-        }
-      ]
+      "id": "https://github.com/Chaitanyahoon/ScamSentry",
+      "url": "https://github.com/Chaitanyahoon/ScamSentry",
+      "title": "ScamSentry — AI-Powered Scam Detection",
+      "content_text": "Real-time scam detection engine analyzing URLs, emails, and phone numbers using ML classifiers and threat intelligence APIs.",
+      "image": "https://chaitanyapatil.dev/assets/scam_sentry_ui.png",
+      "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://humairaambreen.github.io/",
-      "url": "https://humairaambreen.github.io/",
+      "id": "https://chaitanyapatil.dev/",
+      "url": "https://chaitanyapatil.dev/",
       "title": "Portfolio Home",
-      "content_text": "Main portfolio page with projects, services, and contact information.",
-      "image": "https://humairaambreen.github.io/assets/og.png",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://humairaambreen.github.io/assets/og.png",
-          "mime_type": "image/png",
-          "title": "Portfolio preview"
-        }
-      ]
+      "content_text": "Chaitanya Patil's portfolio — Full Stack Developer specializing in Java, Spring Boot, React, and .NET.",
+      "image": "https://chaitanyapatil.dev/assets/og.png",
+      "date_published": "2026-04-21T00:00:00Z"
     },
     {
-      "id": "https://humairaambreen.github.io/resume/",
-      "url": "https://humairaambreen.github.io/resume/",
+      "id": "https://chaitanyapatil.dev/resume/",
+      "url": "https://chaitanyapatil.dev/resume/",
       "title": "Resume",
-      "content_text": "Professional resume of Humaira Ambreen.",
-      "image": "https://humairaambreen.github.io/assets/og.png",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://humairaambreen.github.io/assets/og.png",
-          "mime_type": "image/png",
-          "title": "Resume preview"
-        }
-      ]
-    },
-    {
-      "id": "https://humairaambreen.github.io/support/",
-      "url": "https://humairaambreen.github.io/support/",
-      "title": "Support",
-      "content_text": "Support page for contributions and donations.",
-      "image": "https://humairaambreen.github.io/assets/og.png",
-      "date_modified": "2026-03-04T00:00:00Z",
-      "attachments": [
-        {
-          "url": "https://humairaambreen.github.io/assets/og.png",
-          "mime_type": "image/png",
-          "title": "Support page preview"
-        }
-      ]
+      "content_text": "Professional resume of Chaitanya Patil — Full Stack Developer.",
+      "date_published": "2026-04-21T00:00:00Z"
     }
   ]
 }
