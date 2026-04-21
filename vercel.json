@@ -1,7 +1,4 @@
 {
-  "buildCommand": null,
-  "outputDirectory": "portfolio",
-  "framework": null,
   "rewrites": [
     { "source": "/resume", "destination": "/resume/index.html" },
     { "source": "/support", "destination": "/support/index.html" }

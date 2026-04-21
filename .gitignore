@@ -17,3 +17,4 @@ __pycache__/
 # Temp
 *.log
 fix.py
+fix_domain.py
