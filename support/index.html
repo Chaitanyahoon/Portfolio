@@ -440,7 +440,7 @@
     .threejs-card {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(100, 110, 90, 0.15), rgba(60, 66, 55, 0.9));
+      background: linear-gradient(135deg, rgba(7,113,135,0.15), rgba(7,79,87,0.9));
       cursor: move;
       grid-column: span 3;
       grid-row: span 2;
@@ -816,7 +816,7 @@
   <div class="support-container">
     <header>
       <h1>Support</h1>
-      <p class="tagline">Your support means the world</p>
+      <p class="tagline">Help me mass-produce caffeine to code ratio</p>
     </header>
 
     <div class="bento-grid">
@@ -833,20 +833,19 @@
 
       <!-- Tipping Options Card -->
       <div class="bento-item tips-card">
-        <h3>Quick Tip Amounts</h3>
+        <h3>Pick your fighter</h3>
         <div class="tip-amounts">
-          <button class="tip-btn" data-amount="50">₹50</button>
-          <button class="tip-btn" data-amount="100">₹100</button>
-          <button class="tip-btn" data-amount="200">₹200</button>
-          <button class="tip-btn" data-amount="500">₹500</button>
-          <button class="tip-btn" data-amount="1000">₹1000</button>
-          <button class="tip-btn" data-amount="2000">₹2000</button>
+          <button class="tip-btn" data-amount="50">₹50 <small style="opacity:0.5;font-size:0.65em">a chai</small></button>
+          <button class="tip-btn" data-amount="100">₹100 <small style="opacity:0.5;font-size:0.65em">debugging fuel</small></button>
+          <button class="tip-btn" data-amount="200">₹200 <small style="opacity:0.5;font-size:0.65em">a biryani</small></button>
+          <button class="tip-btn" data-amount="500">₹500 <small style="opacity:0.5;font-size:0.65em">domain renewal</small></button>
+          <button class="tip-btn" data-amount="1000">₹1000 <small style="opacity:0.5;font-size:0.65em">hosting bill</small></button>
+          <button class="tip-btn" data-amount="2000">₹2000 <small style="opacity:0.5;font-size:0.65em">you're insane</small></button>
         </div>
         <div class="custom-tip">
           <input type="number" id="customAmount" placeholder="Enter custom amount (₹)" min="1">
         </div>
-        <p style="font-size: 0.9rem; color: rgba(240, 249, 250, 0.7); margin-top: 1rem;">Select an amount above or
-          enter a custom tip to generate a payment link</p>
+        <p style="font-size: 0.9rem; color: rgba(240, 249, 250, 0.7); margin-top: 1rem;">Select an amount or type your own — the QR code updates itself because I automated my own tip jar</p>
       </div>
 
       <!-- Three.js Card -->
@@ -856,8 +855,8 @@
 
       <!-- International Support Card -->
       <div class="bento-item international-card">
-        <h3>International Payments</h3>
-        <p>For supporters outside India, you can buy me a coffee through the international platform</p>
+        <h3>Not in India? No worries</h3>
+        <p>Buy me a coffee from literally anywhere. The caffeine converts to code regardless of currency.</p>
         <a href="https://www.buymeacoffee.com/chaitanyapatil" target="_blank" rel="noopener noreferrer"
           class="buymeacoffee-btn">
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -872,7 +871,7 @@
 
       <!-- Thank You Card -->
       <div class="bento-item thankyou-card">
-        <div class="quote">Thank you for your generosity and support. It truly makes a difference!</div>
+        <div class="quote">Every rupee goes directly into late-night debugging sessions and domain renewals. You're basically funding the next big thing. Probably.</div>
       </div>
     </div>
 
@@ -1057,27 +1056,33 @@
       renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       renderer.setClearColor(0x000000, 0);
 
-      // Create an icosahedron (geometric sphere) with particles
-      const geometry = new THREE.IcosahedronGeometry(15, 1);
-      const material = new THREE.MeshBasicMaterial({ color: 0xc8b4a0, wireframe: true });
+      // Torus Knot — premium geometry
+      const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+      const material = new THREE.MeshBasicMaterial({ color: 0x9ECE9A, wireframe: true, transparent: true, opacity: 0.6 });
       const mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
 
-      // Add particles around the geometry
+      // Inner glow sphere
+      const glowGeo = new THREE.SphereGeometry(8, 16, 16);
+      const glowMat = new THREE.MeshBasicMaterial({ color: 0x077187, wireframe: true, transparent: true, opacity: 0.2 });
+      const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+      scene.add(glowMesh);
+
+      // Floating particles
       const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 100;
+      const particlesCount = 200;
       const posArray = new Float32Array(particlesCount * 3);
       
       for(let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 50;
+        posArray[i] = (Math.random() - 0.5) * 60;
       }
       
       particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
       const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.15,
-        color: 0xc8b4a0,
+        size: 0.2,
+        color: 0x9ECE9A,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.7
       });
       const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
       scene.add(particlesMesh);
@@ -1122,6 +1127,12 @@
         // Gentle pulsing effect
         const scale = 1 + Math.sin(Date.now() * 0.0008) * 0.08;
         mesh.scale.set(scale, scale, scale);
+
+        // Counter-rotate inner glow
+        glowMesh.rotation.x -= 0.002;
+        glowMesh.rotation.z += 0.003;
+        const glowScale = 1 + Math.sin(Date.now() * 0.001) * 0.15;
+        glowMesh.scale.set(glowScale, glowScale, glowScale);
 
         renderer.render(scene, camera);
       }

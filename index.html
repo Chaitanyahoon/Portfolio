@@ -5956,7 +5956,7 @@
         running = false;
         clearInterval(gameLoop);
         overlay.querySelector('.snake-emoji').textContent = '\ud83d\udc80';
-        var deathMsgs = ['Skill issue \ud83d\udca0', 'RIP bozo \ud83d\ude2d', 'L + ratio + no snake skills', 'You had one job...', 'My grandma plays better fr', 'snake\_game.exe has stopped working'];
+        var deathMsgs = ['skill issue honestly', 'rip bozo', 'L + ratio + no snake skills', 'you had one job', 'my grandma plays better', 'snake_game.exe has stopped working', 'have you considered a different career', 'ctrl+z won\\'t save you here'];
         overlay.querySelector('.snake-title').textContent = 'Score: ' + score;
         overlay.querySelector('.snake-subtitle').textContent = deathMsgs[Math.floor(Math.random() * deathMsgs.length)];
         // Show share button with tweet
@@ -6038,68 +6038,6 @@
     })();
   </script>
 
-  <!-- Konami Code Easter Egg -->
-  <script>
-    (function() {
-      var konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-      var konamiIndex = 0;
-      var triggered = false;
-
-      document.addEventListener('keydown', function(e) {
-        if (triggered) return;
-        if (e.key === konamiCode[konamiIndex]) {
-          konamiIndex++;
-          if (konamiIndex === konamiCode.length) {
-            triggered = true;
-            launchConfetti();
-          }
-        } else {
-          konamiIndex = 0;
-        }
-      });
-
-      function launchConfetti() {
-        // Toast message
-        var toast = document.createElement('div');
-        var secrets = [
-          '🎉 You found the dev secret! Now go touch grass.',
-          '🕹️ ↑↑↓↓←→←→BA — You\'re clearly not working right now.',
-          '🤫 Shhh... you found the cheat code. There\'s no prize tho.',
-          '🧠 Big brain energy. You know the Konami code. Respect.',
-          '💀 Achievement Unlocked: "Has Too Much Free Time"'
-        ];
-        toast.innerHTML = secrets[Math.floor(Math.random() * secrets.length)];
-        toast.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(7,79,87,0.95);color:#9ECE9A;padding:1.2rem 2rem;border-radius:12px;font-size:1.1rem;font-weight:700;z-index:999999;border:1px solid rgba(158,206,154,0.4);backdrop-filter:blur(10px);animation:fadeInUp 0.4s ease;';
-        document.body.appendChild(toast);
-
-        // Confetti particles
-        var colors = ['#9ECE9A','#077187','#F0F9FA','#074F57','#5FB8C4'];
-        for (var i = 0; i < 50; i++) {
-          var particle = document.createElement('div');
-          var size = Math.random() * 8 + 4;
-          var x = Math.random() * 100;
-          var delay = Math.random() * 0.5;
-          var duration = Math.random() * 2 + 2;
-          var color = colors[Math.floor(Math.random() * colors.length)];
-          particle.style.cssText = 'position:fixed;top:-10px;left:' + x + '%;width:' + size + 'px;height:' + size + 'px;background:' + color + ';border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';z-index:999998;pointer-events:none;animation:confettiFall ' + duration + 's ease-in ' + delay + 's forwards;';
-          document.body.appendChild(particle);
-          setTimeout(function(p) { p.remove(); }, (duration + delay) * 1000 + 100, particle);
-        }
-
-        // Remove toast after 3s
-        setTimeout(function() {
-          toast.style.opacity = '0';
-          toast.style.transition = 'opacity 0.4s ease';
-          setTimeout(function() { toast.remove(); }, 400);
-        }, 3000);
-      }
-
-      // Add keyframes dynamically
-      var style = document.createElement('style');
-      style.textContent = '@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}@keyframes fadeInUp{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}';
-      document.head.appendChild(style);
-    })();
-  </script>
 
   <!-- Time Spent Badge -->
   <script>
