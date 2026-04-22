@@ -13,6 +13,10 @@
   <meta name="author" content="Chaitanya Patil">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#074F57">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=IBM+Plex+Mono&family=Playfair+Display:wght@400;700&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=IBM+Plex+Mono&family=Playfair+Display:wght@400;700&display=swap"></noscript>
   <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png">
   <link rel="shortcut icon" href="./assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
@@ -80,7 +84,7 @@
   </script>
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=IBM+Plex+Mono&family=Playfair+Display:wght@400;700&display=swap");
+    /* Fonts loaded via preload link in <head> for non-blocking rendering */
 
     *,
     *::after,
@@ -573,6 +577,7 @@
       height: 100%;
       position: relative;
       overflow: hidden;
+      contain: layout style paint;
     }
 
     .bento-image img, .bento-image video {
@@ -2798,10 +2803,8 @@
       <!-- Planthesia Project -->
       <div class="bento-item planthesia-card" data-col="4" data-row="2">
         <div class="bento-image">
-          <img src="./assets/planthesia_ui.png?v=3" alt="Planthesia UI" class="default-img">
-          <video class="hover-img" autoplay loop muted playsinline>
-            <source src="./assets/covers/planthesiarecording.mp4" type="video/mp4">
-          </video>
+          <img src="./assets/planthesia_ui.png?v=3" alt="Planthesia UI" class="default-img" loading="lazy">
+          <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/planthesiarecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-planthesia" aria-label="Go to Planthesia details"></a>
       </div>
@@ -2816,10 +2819,8 @@
       <!-- StreetBite Project -->
       <div class="bento-item streetbite-card" data-col="5" data-row="2">
         <div class="bento-image">
-          <img src="./assets/streetbite_ui.png?v=2" alt="StreetBite UI" class="default-img">
-          <video class="hover-img" autoplay loop muted playsinline>
-            <source src="./assets/covers/streetbiterecording.mp4" type="video/mp4">
-          </video>
+          <img src="./assets/streetbite_ui.png?v=2" alt="StreetBite UI" class="default-img" loading="lazy">
+          <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/streetbiterecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-streetbite" aria-label="Go to StreetBite details"></a>
       </div>
@@ -2828,10 +2829,8 @@
       <div class="bento-item scamsentry-card" data-col="4" data-row="2">
         <div class="bento-image">
           <div class="circle-inner" aria-hidden="true">
-            <img src="./assets/scam_sentry_ui.png?v=2" alt="ScamSentry UI" class="default-img">
-            <video class="hover-img" autoplay loop muted playsinline>
-              <source src="./assets/covers/scamsentryrecording.mp4" type="video/mp4">
-            </video>
+            <img src="./assets/scam_sentry_ui.png?v=2" alt="ScamSentry UI" class="default-img" loading="lazy">
+            <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/scamsentryrecording.mp4"></video>
           </div>
         </div>
         <a class="bento-link" href="#work-scamsentry" aria-label="Go to ScamSentry details"></a>
@@ -2925,10 +2924,8 @@
       <!-- Focus Arena Project (Showcasing More) -->
       <div class="bento-item focus-arena-card" data-col="4" data-row="2">
         <div class="bento-image">
-          <img src="./assets/focus_arena_ui.png?v=2" alt="Focus Arena UI" class="default-img">
-          <video class="hover-img" autoplay loop muted playsinline>
-            <source src="./assets/covers/focusarenarecording.mp4" type="video/mp4">
-          </video>
+          <img src="./assets/focus_arena_ui.png?v=2" alt="Focus Arena UI" class="default-img" loading="lazy">
+          <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/focusarenarecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-focusarena" aria-label="Go to Focus Arena details"></a>
       </div>
@@ -3369,10 +3366,18 @@
     </footer>
   </div>
 
-  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'></script>
-  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'></script>
-  <script src='https://unpkg.com/split-type'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js' defer></script>
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js' defer></script>
+  <script src='https://unpkg.com/split-type' defer></script>
+  <script>
+    // Lazy-load Three.js only on desktop (saves ~600KB on mobile)
+    if (window.innerWidth > 768) {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  </script>
   <script>
     // Menu Overlay Animation
     (function() {
@@ -3641,8 +3646,17 @@
             window.addEventListener('scroll', checkWorkSection);
           }
           
-          // Also check continuously during smooth scrolling (for programmatic scrolls like card clicks)
-          setInterval(checkWorkSection, 100);
+          // Use IntersectionObserver instead of polling for better perf
+          const workObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                document.body.classList.add('work-section-active');
+              } else {
+                document.body.classList.remove('work-section-active');
+              }
+            });
+          }, { threshold: 0.1 });
+          workObserver.observe(workSection);
           
           // Check on load in case already scrolled
           checkWorkSection();
@@ -4917,12 +4931,27 @@
         updateBounds();
 
         // Animation loop
+        let rafId = null;
+        let isAnimating = false;
         function animate() {
           currentY = lerp(currentY, targetY, config.smoothFactor);
           scroller.style.transform = `translate3d(0, -${round2(currentY)}px, 0)`;
-          requestAnimationFrame(animate);
+          // Stop looping when settled (within 0.5px)
+          if (Math.abs(currentY - targetY) > 0.5) {
+            rafId = requestAnimationFrame(animate);
+          } else {
+            currentY = targetY;
+            scroller.style.transform = `translate3d(0, -${round2(currentY)}px, 0)`;
+            isAnimating = false;
+          }
         }
-        requestAnimationFrame(animate);
+        function startAnimation() {
+          if (!isAnimating) {
+            isAnimating = true;
+            rafId = requestAnimationFrame(animate);
+          }
+        }
+        startAnimation();
 
         // Mouse wheel handler
         let wheelTimeout;
@@ -4930,6 +4959,7 @@
           e.preventDefault();
           targetY += e.deltaY;
           targetY = clamp(targetY, 0, maxScroll);
+          startAnimation();
 
           clearTimeout(wheelTimeout);
           wheelTimeout = setTimeout(() => {
@@ -4965,6 +4995,7 @@
 
           targetY += delta * config.touchSensitivity;
           targetY = clamp(targetY, 0, maxScroll);
+          startAnimation();
         }
 
         function onTouchEnd() {
@@ -5008,12 +5039,14 @@
           }
           y = clamp(Math.round(y), 0, maxScroll);
           targetY = y;
+          startAnimation();
         }
 
         // Expose API for external control (optional)
         window.SmoothScroll = {
           scrollTo: (y) => {
             targetY = clamp(y, 0, maxScroll);
+            startAnimation();
           },
           scrollToElement: scrollToElement,
           getPosition: () => currentY,
@@ -5053,6 +5086,27 @@
       footer.addEventListener('mouseleave', () => {
         footer.style.setProperty('--mouse-x', '50%');
         footer.style.setProperty('--mouse-y', '50%');
+      });
+    })();
+
+    // Lazy-load hover videos: only load src when card is interacted with
+    (function() {
+      const cards = document.querySelectorAll('.bento-image');
+      cards.forEach(function(card) {
+        const video = card.querySelector('video[data-src]');
+        if (!video) return;
+        let loaded = false;
+        function loadVideo() {
+          if (loaded) return;
+          loaded = true;
+          video.src = video.getAttribute('data-src');
+          video.load();
+          video.play().catch(function() {});
+        }
+        // Desktop: load on mouseenter
+        card.addEventListener('mouseenter', loadVideo, { once: true });
+        // Mobile: load on touchstart
+        card.addEventListener('touchstart', loadVideo, { once: true, passive: true });
       });
     })();
 
