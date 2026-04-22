@@ -1320,42 +1320,59 @@
       transform: rotate(90deg);
     }
 
-    /* More Projects Soon Card */
-    .more-projects-card {
+    /* Snake Game Card */
+    .snake-card {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2\rem;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
     }
-    
-    .more-projects-content {
-      text-align: left;
+    .snake-card canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
     }
-    
-    .more-projects-title {
-      margin: 0;
+    .snake-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(7,79,87,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 2;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .snake-overlay.hidden { opacity: 0; pointer-events: none; }
+    .snake-overlay .snake-emoji { font-size: 2rem; }
+    .snake-overlay .snake-title {
+      font-size: 0.85rem;
       font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-    
-    .more-projects-main {
-      display: block;
-      font-size: clamp(2.5rem, 6vw, 3.5rem);
       color: var(--color-foreground);
+      letter-spacing: 0.05em;
     }
-    
-    .more-projects-soon {
-      display: block;
-      font-size: clamp(2.5rem, 6vw, 3.5rem);
-      color: rgba(240, 249, 250, 0.35);
-      transition: all 0.6s ease;
+    .snake-overlay .snake-subtitle {
+      font-size: 0.6rem;
+      color: rgba(158,206,154,0.7);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
-
-    .more-projects-card:hover .more-projects-soon {
+    .snake-score {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #9ECE9A;
       letter-spacing: 0.08em;
-      transform: scale(1.02);
-      display: inline-block;
+      z-index: 1;
+      font-family: 'IBM Plex Mono', monospace;
     }
 
     /* New contact actions layout (two large centered buttons) */
@@ -2323,10 +2340,7 @@
         font-size: 0.9rem;
       }
 
-      .more-projects-main,
-      .more-projects-soon {
-        font-size: clamp(2rem, 8vw, 2.5rem);
-      }
+
 
       footer .footer-name {
         font-size: clamp(2.5rem, 12vw, 8rem);
@@ -2467,8 +2481,9 @@
         order: 17;
       }
 
-      .more-projects-card {
+      .snake-card {
         order: 18;
+        min-height: 280px;
       }
 
       .hero {
@@ -3097,15 +3112,14 @@
           </div>
         </div>
       </div>
-      <!-- Currently Building Card -->
-      <div class="bento-item more-projects-card" data-col="4" data-row="2">
-        <div class="more-projects-content" style="justify-content:center;gap:0.6rem;">
-          <div style="font-size:1.8rem;">🔨</div>
-          <h3 class="more-projects-title" style="display:flex;flex-direction:column;align-items:center;gap:0.25rem;">
-            <span class="more-projects-main" style="font-size:1.1rem;line-height:1.3;">Currently<br>Building</span>
-            <span style="font-size:0.65rem;color:rgba(158,206,154,0.7);letter-spacing:0.12em;text-transform:uppercase;">CRM Desktop App</span>
-          </h3>
-          <a href="https://github.com/Chaitanyahoon" target="_blank" rel="noopener" style="font-size:0.65rem;color:#9ECE9A;text-decoration:none;border-bottom:1px dashed rgba(158,206,154,0.4);padding-bottom:1px;transition:border-color 0.2s;" onmouseenter="this.style.borderColor='#9ECE9A'" onmouseleave="this.style.borderColor='rgba(158,206,154,0.4)'">View on GitHub →</a>
+      <!-- Snake Game Card -->
+      <div class="bento-item snake-card" data-col="4" data-row="2" id="snake-game-card">
+        <div class="snake-score" id="snake-score">0</div>
+        <canvas id="snake-canvas"></canvas>
+        <div class="snake-overlay" id="snake-overlay">
+          <span class="snake-emoji">🐍</span>
+          <span class="snake-title">Snake</span>
+          <span class="snake-subtitle">Click to play</span>
         </div>
       </div>
       <!-- Hire Me / View Services Card -->
@@ -5705,6 +5719,198 @@
       }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
       revealTargets.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+
+  <!-- Snake Game Logic -->
+  <script>
+    (function() {
+      var canvas = document.getElementById('snake-canvas');
+      var ctx = canvas.getContext('2d');
+      var overlay = document.getElementById('snake-overlay');
+      var scoreEl = document.getElementById('snake-score');
+      var card = document.getElementById('snake-game-card');
+      
+      var gridSize = 15;
+      var cols, rows;
+      var snake, food, dx, dy, score, gameLoop, running = false;
+
+      // Colors matching portfolio theme
+      var BG = '#063E44';
+      var SNAKE_HEAD = '#9ECE9A';
+      var SNAKE_BODY = '#077187';
+      var FOOD = '#9ECE9A';
+      var GRID_LINE = 'rgba(158,206,154,0.06)';
+
+      function resize() {
+        var rect = card.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        cols = Math.floor(canvas.width / gridSize);
+        rows = Math.floor(canvas.height / gridSize);
+      }
+
+      function init() {
+        resize();
+        var startX = Math.floor(cols / 2);
+        var startY = Math.floor(rows / 2);
+        snake = [{x: startX, y: startY}, {x: startX - 1, y: startY}, {x: startX - 2, y: startY}];
+        dx = 1; dy = 0;
+        score = 0;
+        scoreEl.textContent = '0';
+        placeFood();
+      }
+
+      function placeFood() {
+        do {
+          food = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+        } while (snake.some(function(s) { return s.x === food.x && s.y === food.y; }));
+      }
+
+      function draw() {
+        // Background
+        ctx.fillStyle = BG;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Subtle grid
+        ctx.strokeStyle = GRID_LINE;
+        ctx.lineWidth = 0.5;
+        for (var x = 0; x < cols; x++) {
+          ctx.beginPath();
+          ctx.moveTo(x * gridSize, 0);
+          ctx.lineTo(x * gridSize, canvas.height);
+          ctx.stroke();
+        }
+        for (var y = 0; y < rows; y++) {
+          ctx.beginPath();
+          ctx.moveTo(0, y * gridSize);
+          ctx.lineTo(canvas.width, y * gridSize);
+          ctx.stroke();
+        }
+
+        // Food (glowing dot)
+        ctx.shadowColor = FOOD;
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = FOOD;
+        ctx.beginPath();
+        ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Snake
+        snake.forEach(function(seg, i) {
+          ctx.fillStyle = i === 0 ? SNAKE_HEAD : SNAKE_BODY;
+          var r = i === 0 ? 4 : 3;
+          ctx.beginPath();
+          ctx.roundRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2, r);
+          ctx.fill();
+        });
+      }
+
+      function update() {
+        var head = { x: snake[0].x + dx, y: snake[0].y + dy };
+        
+        // Wall wrap
+        if (head.x < 0) head.x = cols - 1;
+        if (head.x >= cols) head.x = 0;
+        if (head.y < 0) head.y = rows - 1;
+        if (head.y >= rows) head.y = 0;
+
+        // Self collision
+        if (snake.some(function(s) { return s.x === head.x && s.y === head.y; })) {
+          gameOver();
+          return;
+        }
+
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+          score++;
+          scoreEl.textContent = score;
+          placeFood();
+        } else {
+          snake.pop();
+        }
+
+        draw();
+      }
+
+      function gameOver() {
+        running = false;
+        clearInterval(gameLoop);
+        overlay.querySelector('.snake-emoji').textContent = '\ud83d\udc80';
+        overlay.querySelector('.snake-title').textContent = 'Score: ' + score;
+        overlay.querySelector('.snake-subtitle').textContent = 'Click to retry';
+        overlay.classList.remove('hidden');
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        init();
+        overlay.classList.add('hidden');
+        overlay.querySelector('.snake-emoji').textContent = '\ud83d\udc0d';
+        overlay.querySelector('.snake-title').textContent = 'Snake';
+        overlay.querySelector('.snake-subtitle').textContent = 'Click to play';
+        gameLoop = setInterval(update, 110);
+      }
+
+      // Click to start/restart
+      overlay.addEventListener('click', function(e) { e.stopPropagation(); start(); });
+      card.addEventListener('click', function() { if (!running) start(); });
+
+      // Keyboard controls (only when game is active)
+      document.addEventListener('keydown', function(e) {
+        if (!running) return;
+        switch(e.key) {
+          case 'ArrowUp': case 'w': case 'W':
+            if (dy !== 1) { dx = 0; dy = -1; } e.preventDefault(); break;
+          case 'ArrowDown': case 's': case 'S':
+            if (dy !== -1) { dx = 0; dy = 1; } e.preventDefault(); break;
+          case 'ArrowLeft': case 'a': case 'A':
+            if (dx !== 1) { dx = -1; dy = 0; } e.preventDefault(); break;
+          case 'ArrowRight': case 'd': case 'D':
+            if (dx !== -1) { dx = 1; dy = 0; } e.preventDefault(); break;
+        }
+      });
+
+      // Touch swipe controls for mobile
+      var touchStartX = 0, touchStartY = 0;
+      card.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      card.addEventListener('touchend', function(e) {
+        if (!running) return;
+        var diffX = e.changedTouches[0].clientX - touchStartX;
+        var diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX > 20 && dx !== -1) { dx = 1; dy = 0; }
+          else if (diffX < -20 && dx !== 1) { dx = -1; dy = 0; }
+        } else {
+          if (diffY > 20 && dy !== -1) { dx = 0; dy = 1; }
+          else if (diffY < -20 && dy !== 1) { dx = 0; dy = -1; }
+        }
+      }, { passive: true });
+
+      // Pause when card is off-screen
+      var cardObserver = new IntersectionObserver(function(entries) {
+        if (!entries[0].isIntersecting && running) {
+          clearInterval(gameLoop);
+          running = false;
+          overlay.classList.remove('hidden');
+        }
+      }, { threshold: 0.1 });
+      cardObserver.observe(card);
+
+      // Handle resize
+      window.addEventListener('resize', function() {
+        if (!running) { resize(); draw(); }
+      });
+
+      // Initial draw
+      init();
+      draw();
     })();
   </script>
 </body>
