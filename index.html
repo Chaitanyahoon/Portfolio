@@ -3376,7 +3376,9 @@
     if (window.innerWidth > 768) {
       var s = document.createElement('script');
       s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-      s.defer = true;
+      s.onload = function() {
+        if (typeof window._initBoxBot === 'function') window._initBoxBot();
+      };
       document.head.appendChild(s);
     }
   </script>
@@ -4191,9 +4193,10 @@
     // initialize interactions
     initSkillInteractions();
 
-    // Box Bot Animation
+    // Box Bot Animation (requires Three.js - loaded async on desktop)
     const canvas = document.getElementById('boxbot-canvas');
-    if (canvas) {
+    function _initBoxBotIfReady() {
+      if (!canvas || typeof THREE === 'undefined') return;
       let scene, camera, renderer, boxBot, leftPupil, rightPupil, leftEar, rightEar;
       let mouseX = 0, mouseY = 0;
       let isJumping = false;
@@ -4697,6 +4700,10 @@
         requestOrientationPermission();
       }
     }
+    // Expose for async Three.js onload callback
+    window._initBoxBot = _initBoxBotIfReady;
+    // Try immediately in case Three.js loaded before this script
+    _initBoxBotIfReady();
 
     // GSAP Animations
     const loadingText = new SplitType(".loading-text.initial", { types: "chars" });
