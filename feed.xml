@@ -5,17 +5,17 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Chaitanya Patil</title>
-    <link>https://chaitanyapatil.online/</link>
+    <link>https://www.chaitanyapatil.online/</link>
     <description>Portfolio updates, projects, and engineering insights from Chaitanya Patil — Full Stack Developer.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Apr 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 00:00:00 GMT</lastBuildDate>
     <managingEditor>chaitanyapatil700@gmail.com (Chaitanya Patil)</managingEditor>
     <webMaster>chaitanyapatil700@gmail.com (Chaitanya Patil)</webMaster>
-    <atom:link href="https://chaitanyapatil.online/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.chaitanyapatil.online/feed.xml" rel="self" type="application/rss+xml" />
     <image>
-      <url>https://chaitanyapatil.online/assets/og.png</url>
+      <url>https://www.chaitanyapatil.online/assets/og.png</url>
       <title>Chaitanya Patil</title>
-      <link>https://chaitanyapatil.online/</link>
+      <link>https://www.chaitanyapatil.online/</link>
     </image>
 
     <item>
@@ -24,8 +24,8 @@
       <guid isPermaLink="true">https://streetbitego.vercel.app/</guid>
       <pubDate>Mon, 21 Apr 2026 00:00:00 GMT</pubDate>
       <description>Full-stack street food discovery platform with vendor loyalty, community forums, and real-time geolocation. Built with React, Spring Boot, and MySQL.</description>
-      <enclosure url="https://chaitanyapatil.online/assets/streetbite_ui.png" type="image/png" />
-      <media:content url="https://chaitanyapatil.online/assets/streetbite_ui.png" medium="image" type="image/png" />
+      <enclosure url="https://www.chaitanyapatil.online/assets/streetbite_ui.png" type="image/png" />
+      <media:content url="https://www.chaitanyapatil.online/assets/streetbite_ui.png" medium="image" type="image/png" />
     </item>
 
     <item>
@@ -34,8 +34,8 @@
       <guid isPermaLink="true">https://github.com/Chaitanyahoon/focus-arena</guid>
       <pubDate>Mon, 21 Apr 2026 00:00:00 GMT</pubDate>
       <description>RPG-inspired productivity app with quest systems, boss battles, and guild raids. Built with Next.js, .NET 8, SignalR, and MySQL.</description>
-      <enclosure url="https://chaitanyapatil.online/assets/focus_arena_ui.png" type="image/png" />
-      <media:content url="https://chaitanyapatil.online/assets/focus_arena_ui.png" medium="image" type="image/png" />
+      <enclosure url="https://www.chaitanyapatil.online/assets/focus_arena_ui.png" type="image/png" />
+      <media:content url="https://www.chaitanyapatil.online/assets/focus_arena_ui.png" medium="image" type="image/png" />
     </item>
 
     <item>
@@ -44,23 +44,23 @@
       <guid isPermaLink="true">https://github.com/Chaitanyahoon/ScamSentry</guid>
       <pubDate>Mon, 21 Apr 2026 00:00:00 GMT</pubDate>
       <description>Real-time scam detection engine analyzing URLs, emails, and phone numbers using ML classifiers and threat intelligence APIs.</description>
-      <enclosure url="https://chaitanyapatil.online/assets/scam_sentry_ui.png" type="image/png" />
-      <media:content url="https://chaitanyapatil.online/assets/scam_sentry_ui.png" medium="image" type="image/png" />
+      <enclosure url="https://www.chaitanyapatil.online/assets/scam_sentry_ui.png" type="image/png" />
+      <media:content url="https://www.chaitanyapatil.online/assets/scam_sentry_ui.png" medium="image" type="image/png" />
     </item>
 
     <item>
       <title>Portfolio Home</title>
-      <link>https://chaitanyapatil.online/</link>
-      <guid isPermaLink="true">https://chaitanyapatil.online/</guid>
+      <link>https://www.chaitanyapatil.online/</link>
+      <guid isPermaLink="true">https://www.chaitanyapatil.online/</guid>
       <pubDate>Mon, 21 Apr 2026 00:00:00 GMT</pubDate>
       <description>Chaitanya Patil's portfolio — Full Stack Developer specializing in Java, Spring Boot, React, and .NET.</description>
-      <enclosure url="https://chaitanyapatil.online/assets/og.png" type="image/png" />
+      <enclosure url="https://www.chaitanyapatil.online/assets/og.png" type="image/png" />
     </item>
 
     <item>
       <title>Resume</title>
-      <link>https://chaitanyapatil.online/resume/</link>
-      <guid isPermaLink="true">https://chaitanyapatil.online/resume/</guid>
+      <link>https://www.chaitanyapatil.online/resume/</link>
+      <guid isPermaLink="true">https://www.chaitanyapatil.online/resume/</guid>
       <pubDate>Mon, 21 Apr 2026 00:00:00 GMT</pubDate>
       <description>Professional resume of Chaitanya Patil — Full Stack Developer.</description>
     </item>

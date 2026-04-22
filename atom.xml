@@ -2,12 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Chaitanya Patil</title>
   <subtitle>Portfolio updates, projects, and engineering insights.</subtitle>
-  <id>https://chaitanyapatil.online/</id>
-  <updated>2026-04-21T00:00:00Z</updated>
-  <link rel="self" href="https://chaitanyapatil.online/atom.xml" />
-  <link rel="alternate" href="https://chaitanyapatil.online/" />
-  <logo>https://chaitanyapatil.online/assets/og.png</logo>
-  <icon>https://chaitanyapatil.online/assets/favicon/favicon-96x96.png</icon>
+  <id>https://www.chaitanyapatil.online/</id>
+  <updated>2026-04-22T00:00:00Z</updated>
+  <link rel="self" href="https://www.chaitanyapatil.online/atom.xml" />
+  <link rel="alternate" href="https://www.chaitanyapatil.online/" />
+  <logo>https://www.chaitanyapatil.online/assets/og.png</logo>
+  <icon>https://www.chaitanyapatil.online/assets/favicon/favicon-96x96.png</icon>
   <author>
     <name>Chaitanya Patil</name>
     <email>chaitanyapatil700@gmail.com</email>
@@ -35,15 +35,15 @@
   </entry>
   <entry>
     <title>Portfolio Home</title>
-    <id>https://chaitanyapatil.online/</id>
-    <link href="https://chaitanyapatil.online/" />
+    <id>https://www.chaitanyapatil.online/</id>
+    <link href="https://www.chaitanyapatil.online/" />
     <updated>2026-04-21T00:00:00Z</updated>
     <summary>Chaitanya Patil's portfolio — Full Stack Developer.</summary>
   </entry>
   <entry>
     <title>Resume</title>
-    <id>https://chaitanyapatil.online/resume/</id>
-    <link href="https://chaitanyapatil.online/resume/" />
+    <id>https://www.chaitanyapatil.online/resume/</id>
+    <link href="https://www.chaitanyapatil.online/resume/" />
     <updated>2026-04-21T00:00:00Z</updated>
     <summary>Professional resume of Chaitanya Patil.</summary>
   </entry>

@@ -1,6 +1,6 @@
 {
-  "name": "Humaira Ambreen",
-  "short_name": "Humaira",
+  "name": "Chaitanya Patil",
+  "short_name": "Chaitanya",
   "id": "/",
   "start_url": "/",
   "scope": "/",
@@ -18,7 +18,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#5a6450",
-  "background_color": "#5a6450",
+  "theme_color": "#074F57",
+  "background_color": "#071E22",
   "display": "standalone"
 }
