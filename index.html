@@ -4701,9 +4701,16 @@
       }
     }
     // Expose for async Three.js onload callback
-    window._initBoxBot = _initBoxBotIfReady;
+    window._initBoxBot = function() {
+      try {
+        _initBoxBotIfReady();
+      } catch (e) {
+        console.error("BoxBot init error:", e);
+      }
+    };
+    
     // Try immediately in case Three.js loaded before this script
-    _initBoxBotIfReady();
+    window._initBoxBot();
 
     // GSAP Animations
     const loadingText = new SplitType(".loading-text.initial", { types: "chars" });
