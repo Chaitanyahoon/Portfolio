@@ -21,27 +21,31 @@
   <link rel="shortcut icon" href="./assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="./assets/favicon/site.webmanifest">
-  <link rel="canonical" href="https://chaitanyapatil.online/">
-  <link rel="alternate" hreflang="en" href="https://chaitanyapatil.online/">
-  <link rel="alternate" type="application/rss+xml" title="Chaitanya Patil RSS Feed" href="https://chaitanyapatil.online/feed.xml">
-  <link rel="alternate" type="application/atom+xml" title="Chaitanya Patil Atom Feed" href="https://chaitanyapatil.online/atom.xml">
-  <link rel="alternate" type="application/feed+json" title="Chaitanya Patil JSON Feed" href="https://chaitanyapatil.online/feed.json">
+  <link rel="canonical" href="https://www.chaitanyapatil.online/">
+  <link rel="alternate" hreflang="en" href="https://www.chaitanyapatil.online/">
+  <link rel="alternate" type="application/rss+xml" title="Chaitanya Patil RSS Feed" href="https://www.chaitanyapatil.online/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Chaitanya Patil Atom Feed" href="https://www.chaitanyapatil.online/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Chaitanya Patil JSON Feed" href="https://www.chaitanyapatil.online/feed.json">
   <meta name="pinterest-rich-pin" content="true">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Chaitanya Patil (Chai) | Best Full Stack Developer Portfolio">
   <meta property="og:description"
     content="Explore the best portfolio of Chaitanya Patil (Chai), a top-tier Full Stack Developer building scalable web apps with Java, Spring Boot, React, and .NET.">
-  <meta property="og:url" content="https://chaitanyapatil.online/">
+  <meta property="og:url" content="https://www.chaitanyapatil.online/">
   <meta property="og:site_name" content="Chaitanya Patil">
   <meta property="og:image" content="https://chaitanyapatil.online/assets/og.png">
   <meta property="og:image:alt" content="Chaitanya Patil portfolio preview">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Chaitanya Patil (Chai) | Best Full Stack Developer Portfolio">
   <meta name="twitter:description"
     content="Explore the best portfolio of Chaitanya Patil (Chai), a top-tier Full Stack Developer building scalable web apps with Java, Spring Boot, React, and .NET.">
   <meta name="twitter:image" content="https://chaitanyapatil.online/assets/og.png">
+  <meta name="twitter:creator" content="@chaitanyapatil">
 
   <script type="application/ld+json">
     {
@@ -49,17 +53,27 @@
       "@type": "Person",
       "name": "Chaitanya Patil",
       "alternateName": ["Chai", "Chaitanya", "Chaitanya Patil Developer"],
-      "url": "https://chaitanyapatil.online/",
-      "image": "https://chaitanyapatil.online/assets/og.png",
+      "url": "https://www.chaitanyapatil.online/",
+      "image": "https://www.chaitanyapatil.online/assets/og.png",
       "jobTitle": "Full Stack Developer",
+      "description": "Full Stack Developer from India specializing in Java, Spring Boot, React, Next.js, and .NET Core. Building scalable web applications with clean architecture.",
+      "email": "chaitanyapatil700@gmail.com",
       "address": {
         "@type": "PostalAddress",
+        "addressRegion": "Maharashtra",
         "addressCountry": "IN"
       },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Softweb IT Services",
+        "url": "https://www.softwebitservices.com"
+      },
+      "knowsAbout": ["Java", "Spring Boot", "React", "Next.js", ".NET Core", "TypeScript", "REST API", "MySQL", "MongoDB", "Docker", "CI/CD", "Full Stack Development"],
       "alumniOf": [
         {
           "@type": "EducationalOrganization",
-          "name": "MET Institute of Information Technology"
+          "name": "MET Institute of Information Technology",
+          "url": "https://met.edu"
         },
         {
           "@type": "EducationalOrganization",
@@ -68,7 +82,34 @@
       ],
       "sameAs": [
         "https://github.com/Chaitanyahoon",
-        "https://linkedin.com/in/chaitanyapatil700"
+        "https://www.linkedin.com/in/chaitanyapatil700"
+      ]
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.chaitanyapatil.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://www.chaitanyapatil.online/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Services",
+          "item": "https://www.chaitanyapatil.online/#services"
+        }
       ]
     }
   </script>
@@ -79,7 +120,7 @@
       "@type": "WebSite",
       "name": "Chaitanya Patil Portfolio",
       "alternateName": ["Chai Portfolio", "Best India Portfolio", "Chaitanya Patil"],
-      "url": "https://chaitanyapatil.online/"
+      "url": "https://www.chaitanyapatil.online/"
     }
   </script>
 
@@ -92,6 +133,12 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    /* Mobile: eliminate 300ms tap delay and highlight flash */
+    html {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
@@ -2413,15 +2460,15 @@
       }
 
       .quote-card {
-        order: 15;
-      }
-
-      .social-links-card {
         order: 16;
       }
 
-      .more-projects-card {
+      .social-links-card {
         order: 17;
+      }
+
+      .more-projects-card {
+        order: 18;
       }
 
       .hero {
@@ -2939,7 +2986,7 @@
         <p>Open to exciting opportunities, collaborations, and ambitious projects. Drop a message — I reply fast.</p>
 
         <div class="contact-actions">
-          <a href="https://linkedin.com/in/chaitanyapatil700" target="_blank" rel="noopener" class="contact-action" aria-label="LinkedIn profile">
+          <a href="https://linkedin.com/in/chaitanyapatil700" target="_blank" rel="me noopener" class="contact-action" aria-label="LinkedIn profile">
             <!-- LinkedIn icon -->
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2996,7 +3043,7 @@
               </svg>
             </a>
 
-            <a class="mini" href="https://www.linkedin.com/in/chaitanyapatil700" target="_blank" rel="noopener noreferrer"
+            <a class="mini" href="https://www.linkedin.com/in/chaitanyapatil700" target="_blank" rel="me noopener noreferrer"
               aria-label="LinkedIn">
               <!-- LinkedIn SVG -->
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -3005,7 +3052,7 @@
               </svg>
             </a>
 
-            <a class="mini" href="https://github.com/Chaitanyahoon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a class="mini" href="https://github.com/Chaitanyahoon" target="_blank" rel="me noopener noreferrer" aria-label="GitHub">
               <!-- GitHub SVG -->
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path
