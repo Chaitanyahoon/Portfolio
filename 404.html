@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Chaitanya Patil</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #074F57;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #F0F9FA;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      z-index: 2;
+      padding: 2rem;
+    }
+    .glitch {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: #9ECE9A;
+      position: relative;
+      text-shadow: 0 0 40px rgba(158,206,154,0.3);
+      animation: glitch 3s infinite;
+    }
+    @keyframes glitch {
+      0%, 90%, 100% { text-shadow: 0 0 40px rgba(158,206,154,0.3); }
+      92% { text-shadow: -3px 0 #077187, 3px 0 #9ECE9A; }
+      94% { text-shadow: 3px 0 #077187, -3px 0 #9ECE9A; }
+      96% { text-shadow: 0 0 40px rgba(158,206,154,0.3); }
+    }
+    .message {
+      font-size: 1.2rem;
+      color: rgba(240,249,250,0.7);
+      margin-top: 0.5rem;
+    }
+    .subtext {
+      font-size: 0.85rem;
+      color: rgba(158,206,154,0.6);
+      margin-top: 1.5rem;
+    }
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      background: rgba(158,206,154,0.1);
+      border: 1px solid rgba(158,206,154,0.3);
+      border-radius: 12px;
+      color: #9ECE9A;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      font-family: inherit;
+    }
+    .home-btn:hover {
+      background: rgba(158,206,154,0.2);
+      border-color: #9ECE9A;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(158,206,154,0.15);
+    }
+    /* Floating particles background */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.15;
+      pointer-events: none;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.15; }
+      90% { opacity: 0.15; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="glitch">404</div>
+    <p class="message" id="funny-msg"></p>
+    <p class="subtext" id="funny-sub"></p>
+    <a href="/" class="home-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span id="btn-text"></span>
+    </a>
+  </div>
+  <script>
+    var msgs = [
+      { msg: "Bro how tf did you even get here? 💀", sub: "This URL doesn't exist. Never did. Never will.", btn: "Escape This Void" },
+      { msg: "This page ran away. Can't blame it tbh.", sub: "Even my code has commitment issues.", btn: "Go Somewhere Real" },
+      { msg: "404: Page not found. My motivation? Also not found.", sub: "We have so much in common already.", btn: "Take Me Home" },
+      { msg: "You broke the internet. Nice job. 👏", sub: "Just kidding. But seriously, this page doesn't exist.", btn: "Undo My Mistake" },
+      { msg: "Plot twist: this page was the friends we made along the way.", sub: "Spoiler: there are no friends here. Just a 404.", btn: "Find Actual Friends" },
+      { msg: "Congratulations, you've discovered... nothing. 🎉", sub: "Achievement unlocked: Professional URL Guesser", btn: "Claim My Prize (Home)" }
+    ];
+    var pick = msgs[Math.floor(Math.random() * msgs.length)];
+    document.getElementById('funny-msg').textContent = pick.msg;
+    document.getElementById('funny-sub').textContent = pick.sub;
+    document.getElementById('btn-text').textContent = pick.btn;
+  </script>
+  <script>
+    // Generate floating particles
+    var colors = ['#9ECE9A','#077187','#5FB8C4'];
+    for (var i = 0; i < 20; i++) {
+      var p = document.createElement('div');
+      p.className = 'particle';
+      var size = Math.random() * 6 + 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      document.body.appendChild(p);
+    }
+  </script>
+</body>
+</html>
