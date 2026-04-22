@@ -4764,6 +4764,12 @@
       }
     }
 
+    // Prefetch hover videos during preloader (they're tiny ~1MB total, cache them now)
+    document.querySelectorAll('video[data-src]').forEach(function(v) {
+      var src = v.getAttribute('data-src');
+      if (src) fetch(src).catch(function() {});
+    });
+
     const tl = gsap.timeline();
 
     tl.to(".progress-bar", {
