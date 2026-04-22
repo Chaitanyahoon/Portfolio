@@ -5107,22 +5107,23 @@
 
     // Lazy-load hover videos: only load src when card is interacted with
     (function() {
-      const cards = document.querySelectorAll('.bento-image');
-      cards.forEach(function(card) {
-        const video = card.querySelector('video[data-src]');
+      const items = document.querySelectorAll('.bento-item');
+      items.forEach(function(item) {
+        const video = item.querySelector('video[data-src]');
         if (!video) return;
         let loaded = false;
         function loadVideo() {
           if (loaded) return;
           loaded = true;
+          video.autoplay = true; 
           video.src = video.getAttribute('data-src');
           video.load();
-          video.play().catch(function() {});
+          video.play().catch(function(e) { console.warn("Video play failed:", e); });
         }
-        // Desktop: load on mouseenter
-        card.addEventListener('mouseenter', loadVideo, { once: true });
-        // Mobile: load on touchstart
-        card.addEventListener('touchstart', loadVideo, { once: true, passive: true });
+        // Desktop: load on mouseenter anywhere on the bento card
+        item.addEventListener('mouseenter', loadVideo, { once: true });
+        // Mobile: load on touch
+        item.addEventListener('touchstart', loadVideo, { once: true, passive: true });
       });
     })();
 
