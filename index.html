@@ -3205,14 +3205,15 @@
 
       <div class="bento-item profile-picture-card" data-col="3" data-row="2">
         <style>
-          .profile-ring {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #077187, #9ECE9A, #077187);
-            padding: 3px;
-          }
+    .profile-ring {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #077187, #9ECE9A, #077187);
+      padding: 3px;
+      animation: none !important;
+    }
           .profile-ring img {
             width: 100%;
             height: 100%;
@@ -6241,59 +6242,5 @@
   </script>
 
 
-  <!-- Time Spent Badge -->
-  <script>
-    (function() {
-      var badge = document.createElement('div');
-      badge.id = 'time-badge';
-      badge.style.cssText = 'position:fixed;bottom:16px;left:16px;display:flex;align-items:center;gap:0.35rem;padding:0.3rem 0.6rem;border-radius:20px;font-size:0.6rem;font-weight:600;font-family:"IBM Plex Mono",monospace;letter-spacing:0.05em;z-index:9999;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);opacity:0;transform:translateY(10px);background:rgba(7,79,87,0.8);border:1px solid rgba(158,206,154,0.2);color:rgba(158,206,154,0.6);backdrop-filter:blur(6px);cursor:default;';
-      badge.innerHTML = '<span id="time-icon">⏱️</span> <span id="time-text">0:00</span>';
-      document.body.appendChild(badge);
-
-      var startTime = Date.now();
-      var currentTier = '';
-
-      setInterval(function() {
-        var elapsed = Math.floor((Date.now() - startTime) / 1000);
-        var mins = Math.floor(elapsed / 60);
-        var secs = elapsed % 60;
-        document.getElementById('time-text').textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
-
-        // Show badge after 5 seconds
-        if (elapsed >= 5) {
-          badge.style.opacity = '1';
-          badge.style.transform = 'translateY(0)';
-        }
-
-        // Tier upgrades
-        if (elapsed >= 180 && currentTier !== 'gold') {
-          currentTier = 'gold';
-          badge.style.borderColor = 'rgba(255,215,0,0.5)';
-          badge.style.color = '#FFD700';
-          document.getElementById('time-icon').textContent = '🥇';
-          badge.title = '🥇 Gold Explorer — you live here now';
-          badge.style.transform = 'translateY(0) scale(1.1)';
-          setTimeout(function() { badge.style.transform = 'translateY(0) scale(1)'; }, 400);
-        } else if (elapsed >= 60 && currentTier !== 'silver' && currentTier !== 'gold') {
-          currentTier = 'silver';
-          badge.style.borderColor = 'rgba(192,192,192,0.5)';
-          badge.style.color = '#C0C0C0';
-          document.getElementById('time-icon').textContent = '🥈';
-          badge.title = '🥈 Silver — do you have a job?';
-          badge.style.transform = 'translateY(0) scale(1.1)';
-          setTimeout(function() { badge.style.transform = 'translateY(0) scale(1)'; }, 400);
-        } else if (elapsed >= 30 && currentTier !== 'bronze' && currentTier !== 'silver' && currentTier !== 'gold') {
-          currentTier = 'bronze';
-          badge.style.borderColor = 'rgba(205,127,50,0.5)';
-          badge.style.color = '#CD7F32';
-          document.getElementById('time-icon').textContent = '🥉';
-          badge.title = '🥉 Bronze — thanks for not bouncing instantly';
-          badge.style.transform = 'translateY(0) scale(1.1)';
-          setTimeout(function() { badge.style.transform = 'translateY(0) scale(1)'; }, 400);
-        }
-      }, 1000);
-    })();
-  </script>
 </body>
-
 </html>
