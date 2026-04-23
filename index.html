@@ -3213,6 +3213,7 @@
       background: conic-gradient(from 0deg, #077187, #9ECE9A, #077187);
       padding: 3px;
       animation: none !important;
+      transform: none !important;
     }
           .profile-ring img {
             width: 100%;
@@ -3222,6 +3223,7 @@
             object-position: top center;
             display: block;
             border: 3px solid var(--color-background);
+            transform: none !important;
           }
           .profile-status {
             position: absolute;
@@ -3475,7 +3477,7 @@
           <circle cx="12" cy="9" r="2.4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></circle>
         </svg>
         <h3>Based in <span class="location-highlight">India</span></h3>
-        <div class="time" id="ist-clock">IST --:-- --</div>
+        <div class="time">Asia/Kolkata</div>
         <p class="subtitle">Available for remote work worldwide</p>
       </div>
       <!-- Project 7: Quote Card -->
@@ -5376,24 +5378,6 @@
     gsap.set(".bento-item", { opacity: 0 });
   </script>
 
-  <script>
-    // Live IST clock updater
-    (function() {
-      const el = document.getElementById('ist-clock');
-      if (!el) return;
-      function tick() {
-        const now = new Date().toLocaleTimeString('en-US', {
-          timeZone: 'Asia/Kolkata',
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true
-        });
-        el.textContent = 'IST ' + now;
-      }
-      tick();
-      setInterval(tick, 1000);
-    })();
-  </script>
   <script>
     (function () {
 
