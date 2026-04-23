@@ -230,8 +230,30 @@
     ]
   </script>
 
+  <link rel="preload" href="./assets/ChaitanyaPatil.pdf" as="document">
+  <link rel="prefetch" href="./support/index.html">
   <style>
-    /* Fonts loaded via preload link in <head> for non-blocking rendering */
+    /* Critical CSS: Preloader and Base styles to prevent Flash of Unstyled Content (FOUC) */
+    .preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: #074F57; display: flex; justify-content: center;
+      align-items: center; flex-direction: column; z-index: 1000;
+      transition: background-color 0.6s ease;
+    }
+    .progress-container {
+      width: 300px; height: 2px; background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px; position: relative; z-index: 2;
+    }
+    .progress-bar {
+      position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+      background: #F0F9FA; transition: background-color 0.6s ease;
+    }
+    .percentage {
+      position: fixed; bottom: 32px; right: 32px; font-family: "Inter", sans-serif;
+      font-weight: 700; font-size: clamp(8rem, 20vw, 25rem); line-height: 0.8;
+      color: #F0F9FA; opacity: 0.1; will-change: color;
+    }
+    /* End Critical CSS */
 
     *,
     *::after,
@@ -2658,7 +2680,7 @@
       .services-sticky-wrapper {
         position: relative;
         height: auto;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: visible;
         padding-top: 2rem;
         padding-bottom: 2rem;
@@ -2667,6 +2689,7 @@
         scrollbar-color: rgba(158, 206, 154, 0.3) transparent;
         touch-action: pan-x pan-y;
         display: block;
+        scroll-snap-type: x mandatory;
       }
 
       .services-sticky-wrapper::-webkit-scrollbar {
@@ -2825,9 +2848,17 @@
       }
 
       .contact-action {
-        padding: 0.9rem 1rem;
-        font-size: 0.85rem;
+        padding: 1rem 1.2rem;
+        font-size: 0.9rem;
         gap: 0.6rem;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .contact-action:active {
+        transform: scale(0.95);
+        background: rgba(158, 206, 154, 0.2);
       }
 
       .contact-action svg {
@@ -2850,9 +2881,17 @@
       }
 
       footer .footer-btn {
-        padding: 0.7rem 0.6rem;
-        font-size: 0.75rem;
-        gap: 0.3rem;
+        padding: 0.8rem 0.8rem;
+        font-size: 0.85rem;
+        gap: 0.4rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      footer .footer-btn:active {
+        transform: scale(0.95);
+        background: rgba(158, 206, 154, 0.1);
       }
 
       footer .footer-btn svg {
@@ -2895,10 +2934,27 @@
       border: 1.5px solid rgba(158,206,154,0.35);
       transition: width 0.2s, height 0.2s, opacity 0.3s ease;
     }
-    .cursor-outline.hovering {
-      width: 50px;
-      height: 50px;
-      border-color: rgba(158,206,154,0.6);
+    /* ═══════ Utility Toast ═══════ */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--color-accent);
+      color: var(--color-background);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 100000;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
 
     /* ═══════ Scroll Progress Bar ═══════ */
@@ -2924,21 +2980,59 @@
       transform: translateY(0);
     }
 
-    /* ═══════ Accessibility: Reduced Motion ═══════ */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-      .cursor-dot, .cursor-outline {
-        display: none;
-      }
+    /* ═══════ Smart Header (Mobile) ═══════ */
+    .smart-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+      width: 90%;
+      max-width: 400px;
+      background: rgba(7, 113, 135, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--color-border);
+      border-radius: 0 0 20px 20px;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .smart-header.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .smart-header .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+    .smart-header a {
+      color: var(--color-foreground);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+    .smart-header a:active {
+      opacity: 1;
+      color: var(--color-accent);
+    }
+
+    /* Bento Card Spring Effect */
+    .bento-item {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    }
+    .bento-item:active {
+      transform: scale(0.96) translateY(2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -2953,6 +3047,18 @@
 
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress" aria-hidden="true"></div>
+
+  <div id="copyToast" class="toast">Copied to clipboard!</div>
+
+  <!-- Smart Header (Mobile) -->
+  <div class="smart-header" id="smartHeader">
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div style="font-size: 0.7rem; font-weight: 700; color: var(--color-accent);">CP</div>
+  </div>
 
   <!-- Menu Toggle Button -->
   <div class="menu-toggle">
@@ -3096,24 +3202,29 @@
             border: 3px solid var(--color-background);
             box-shadow: 0 0 8px rgba(158, 206, 154, 0.6);
           }
-          .profile-resume-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.55rem 0;
-            border: 1px solid rgba(158,206,154,0.25);
-            border-radius: 10px;
-            color: #9ECE9A;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-            background: rgba(158,206,154,0.06);
-            backdrop-filter: blur(4px);
-          }
+      .profile-resume-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.75rem 0;
+        min-height: 44px;
+        border: 1px solid rgba(158,206,154,0.25);
+        border-radius: 10px;
+        color: #9ECE9A;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        background: rgba(158,206,154,0.06);
+        backdrop-filter: blur(4px);
+      }
+      .profile-resume-btn:active {
+        transform: scale(0.98);
+        background: rgba(158,206,154,0.15);
+      }
           .profile-resume-btn:hover {
             background: rgba(158,206,154,0.15);
             border-color: #9ECE9A;
@@ -3147,7 +3258,10 @@
       <!-- Planthesia Project -->
       <div class="bento-item planthesia-card" data-col="4" data-row="2">
         <div class="bento-image">
-          <picture><source srcset="./assets/planthesia_ui.webp" type="image/webp"><img src="./assets/planthesia_ui.png?v=3" alt="Planthesia UI" class="default-img" loading="lazy"></picture>
+          <picture>
+            <source srcset="./assets/planthesia_ui.webp" type="image/webp">
+            <img src="./assets/planthesia_ui.png?v=3" alt="Planthesia UI" class="default-img" loading="lazy" width="800" height="600">
+          </picture>
           <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/planthesiarecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-planthesia" aria-label="Go to Planthesia details"></a>
@@ -3163,7 +3277,10 @@
       <!-- StreetBite Project -->
       <div class="bento-item streetbite-card" data-col="5" data-row="2">
         <div class="bento-image">
-          <picture><source srcset="./assets/streetbite_ui.webp" type="image/webp"><img src="./assets/streetbite_ui.png?v=2" alt="StreetBite UI" class="default-img" loading="lazy"></picture>
+          <picture>
+            <source srcset="./assets/streetbite_ui.webp" type="image/webp">
+            <img src="./assets/streetbite_ui.png?v=2" alt="StreetBite UI" class="default-img" loading="lazy" width="800" height="600">
+          </picture>
           <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/streetbiterecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-streetbite" aria-label="Go to StreetBite details"></a>
@@ -3173,7 +3290,10 @@
       <div class="bento-item scamsentry-card" data-col="4" data-row="2">
         <div class="bento-image">
           <div class="circle-inner" aria-hidden="true">
-            <picture><source srcset="./assets/scam_sentry_ui.webp" type="image/webp"><img src="./assets/scam_sentry_ui.png?v=2" alt="ScamSentry UI" class="default-img" loading="lazy"></picture>
+            <picture>
+              <source srcset="./assets/scam_sentry_ui.webp" type="image/webp">
+              <img src="./assets/scam_sentry_ui.png?v=2" alt="ScamSentry UI" class="default-img" loading="lazy" width="800" height="600">
+            </picture>
             <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/scamsentryrecording.mp4"></video>
           </div>
         </div>
@@ -3273,7 +3393,10 @@
       <!-- Focus Arena Project (Showcasing More) -->
       <div class="bento-item focus-arena-card" data-col="4" data-row="2">
         <div class="bento-image">
-          <picture><source srcset="./assets/focus_arena_ui.webp" type="image/webp"><img src="./assets/focus_arena_ui.png?v=2" alt="Focus Arena UI" class="default-img" loading="lazy"></picture>
+          <picture>
+            <source srcset="./assets/focus_arena_ui.webp" type="image/webp">
+            <img src="./assets/focus_arena_ui.png?v=2" alt="Focus Arena UI" class="default-img" loading="lazy" width="800" height="600">
+          </picture>
           <video class="hover-img" loop muted playsinline preload="none" data-src="./assets/covers/focusarenarecording.mp4"></video>
         </div>
         <a class="bento-link" href="#work-focusarena" aria-label="Go to Focus Arena details"></a>
@@ -3703,6 +3826,15 @@
     </footer>
   </div>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered', reg))
+          .catch(err => console.log('SW registration failed', err));
+      });
+    }
+  </script>
   <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'></script>
   <script src='https://unpkg.com/split-type'></script>
@@ -3720,6 +3852,42 @@
   <script>
     // Menu Overlay Animation
     (function() {
+      // Copy to Clipboard Logic
+      const copyToast = document.getElementById('copyToast');
+      function showToast(text = 'Copied to clipboard!') {
+        copyToast.textContent = text;
+        copyToast.classList.add('visible');
+        setTimeout(() => copyToast.classList.remove('visible'), 2500);
+      }
+
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('a[href^="mailto:"], a[href^="tel:"]');
+        if (!target) return;
+
+        const rawValue = target.getAttribute('href');
+        const cleanValue = rawValue.replace('mailto:', '').replace('tel:', '').split('?')[0];
+
+        navigator.clipboard.writeText(cleanValue).then(() => {
+          showToast(cleanValue.includes('@') ? 'Email copied!' : 'Phone number copied!');
+        });
+      });
+
+      // Smart Header Logic
+      const smartHeader = document.getElementById('smartHeader');
+      let lastScrollY = window.pageYOffset;
+
+      window.addEventListener('scroll', () => {
+        if (window.innerWidth > 768) return;
+
+        const currentScrollY = window.pageYOffset;
+        if (currentScrollY > 300 && currentScrollY < lastScrollY) {
+          smartHeader.classList.add('visible');
+        } else {
+          smartHeader.classList.remove('visible');
+        }
+        lastScrollY = currentScrollY;
+      });
+
       const menuOverlay = document.querySelector(".menu-overlay");
       const portfolioContainer = document.querySelector(".portfolio-container");
       const toggleButton = document.querySelector(".menu-toggle");
