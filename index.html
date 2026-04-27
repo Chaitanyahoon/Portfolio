@@ -1559,6 +1559,51 @@
       font-size: 0.7rem;
       margin-bottom: 1rem;
     }
+    #snake-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 62, 68, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+    }
+    #snake-share {
+      display: none !important;
+      align-items: center;
+      gap: 6px;
+      background: #9ECE9A;
+      color: #063E44;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    #snake-share.show {
+      display: inline-flex !important;
+    }
+    #snake-share:hover {
+      background: #F0F9FA;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(158, 206, 154, 0.3);
+    }
+    #snake-share svg {
+      transition: transform 0.2s ease;
+    }
+    #snake-share:hover svg {
+      transform: rotate(15deg);
+    }
 
     /* New contact actions layout (two large centered buttons) */
     .contact-actions {
@@ -5952,6 +5997,8 @@
         });
       });
     })();
+  </script>
+
   <!-- Custom Cursor + Scroll Progress + Scroll Reveal -->
   <script>
     (function() {
@@ -6030,199 +6077,168 @@
   <!-- Snake Game Logic -->
   <script>
     (function() {
-      var canvas = document.getElementById('snake-canvas');
-      var ctx = canvas.getContext('2d');
-      var overlay = document.getElementById('snake-overlay');
-      var scoreEl = document.getElementById('snake-score');
-      var card = document.getElementById('snake-game-card');
-      
-      var gridSize = 15;
-      var cols, rows;
-      var snake, food, dx, dy, score, gameLoop, running = false;
-
-      // Colors matching portfolio theme
-      var BG = '#063E44';
-      var SNAKE_HEAD = '#9ECE9A';
-      var SNAKE_BODY = '#077187';
-      var FOOD = '#9ECE9A';
-      var GRID_LINE = 'rgba(158,206,154,0.06)';
-
-      function resize() {
-        var rect = card.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-        cols = Math.floor(canvas.width / gridSize);
-        rows = Math.floor(canvas.height / gridSize);
-      }
-
-      function init() {
-        resize();
-        var startX = Math.floor(cols / 2);
-        var startY = Math.floor(rows / 2);
-        snake = [{x: startX, y: startY}, {x: startX - 1, y: startY}, {x: startX - 2, y: startY}];
-        dx = 1; dy = 0;
-        score = 0;
-        scoreEl.textContent = '0';
-        placeFood();
-      }
-
-      function placeFood() {
-        do {
-          food = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
-        } while (snake.some(function(s) { return s.x === food.x && s.y === food.y; }));
-      }
-
-      function draw() {
-        // Background
-        ctx.fillStyle = BG;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      var gameInitialized = false;
+      function initSnakeGame() {
+        if (gameInitialized) return;
         
-        // Subtle grid
-        ctx.strokeStyle = GRID_LINE;
-        ctx.lineWidth = 0.5;
-        for (var x = 0; x < cols; x++) {
-          ctx.beginPath();
-          ctx.moveTo(x * gridSize, 0);
-          ctx.lineTo(x * gridSize, canvas.height);
-          ctx.stroke();
-        }
-        for (var y = 0; y < rows; y++) {
-          ctx.beginPath();
-          ctx.moveTo(0, y * gridSize);
-          ctx.lineTo(canvas.width, y * gridSize);
-          ctx.stroke();
-        }
+        var card = document.getElementById('snake-game-card');
+        var canvas = document.getElementById('snake-canvas');
+        var overlay = document.getElementById('snake-overlay');
+        var scoreEl = document.getElementById('snake-score');
+        var shareBtn = document.getElementById('snake-share');
+        
+        if (!card || !canvas || !overlay) return;
+        gameInitialized = true;
 
-        // Food (glowing dot)
-        ctx.shadowColor = FOOD;
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = FOOD;
-        ctx.beginPath();
-        ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        var ctx = canvas.getContext('2d');
+        var gridSize = 15;
+        var cols, rows, snake, food, dx, dy, score, gameLoop;
+        var running = false;
 
-        // Snake
-        snake.forEach(function(seg, i) {
-          ctx.fillStyle = i === 0 ? SNAKE_HEAD : SNAKE_BODY;
-          var r = i === 0 ? 4 : 3;
-          ctx.beginPath();
-          ctx.roundRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2, r);
-          ctx.fill();
-        });
-      }
-
-      function update() {
-        var head = { x: snake[0].x + dx, y: snake[0].y + dy };
-
-        // Wall wrap
-        if (head.x < 0) head.x = cols - 1;
-        if (head.x >= cols) head.x = 0;
-        if (head.y < 0) head.y = rows - 1;
-        if (head.y >= rows) head.y = 0;
-
-        // Self collision
-        if (snake.some(function(s) { return s.x === head.x && s.y === head.y; })) {
-          gameOver();
-          return;
+        function resize() {
+          var rect = card.getBoundingClientRect();
+          canvas.width = rect.width || 300;
+          canvas.height = rect.height || 300;
+          cols = Math.max(10, Math.floor(canvas.width / gridSize));
+          rows = Math.max(10, Math.floor(canvas.height / gridSize));
+          return rect.width > 0;
         }
 
-        snake.unshift(head);
-
-        if (head.x === food.x && head.y === food.y) {
-          score++;
-          scoreEl.textContent = score;
+        function init() {
+          resize();
+          var startX = Math.floor(cols / 2);
+          var startY = Math.floor(rows / 2);
+          snake = [
+            {x: startX, y: startY}, 
+            {x: startX - 1, y: startY}, 
+            {x: startX - 2, y: startY}
+          ];
+          dx = 1; dy = 0;
+          score = 0;
+          scoreEl.textContent = '0';
           placeFood();
-        } else {
-          snake.pop();
         }
 
+        function placeFood() {
+          var attempts = 0;
+          do {
+            food = { 
+              x: Math.floor(Math.random() * cols), 
+              y: Math.floor(Math.random() * rows) 
+            };
+            attempts++;
+          } while (isOccupied(food.x, food.y) && attempts < 100);
+        }
+
+        function isOccupied(x, y) {
+          for (var i = 0; i < snake.length; i++) {
+            if (snake[i].x === x && snake[i].y === y) return true;
+          }
+          return false;
+        }
+
+        function draw() {
+          // Clear background
+          ctx.fillStyle = '#063E44';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          // Food
+          ctx.fillStyle = '#9ECE9A';
+          ctx.beginPath();
+          ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/3, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Snake
+          for (var i = 0; i < snake.length; i++) {
+            var seg = snake[i];
+            ctx.fillStyle = i === 0 ? '#9ECE9A' : '#077187';
+            ctx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
+          }
+        }
+
+        function update() {
+          var head = { x: snake[0].x + dx, y: snake[0].y + dy };
+          
+          // Wall wrap
+          if (head.x < 0) head.x = cols - 1;
+          if (head.x >= cols) head.x = 0;
+          if (head.y < 0) head.y = rows - 1;
+          if (head.y >= rows) head.y = 0;
+
+          // Self collision
+          if (isOccupied(head.x, head.y)) {
+            gameOver();
+            return;
+          }
+
+          snake.unshift(head);
+
+          if (head.x === food.x && head.y === food.y) {
+            score++;
+            scoreEl.textContent = score;
+            placeFood();
+          } else {
+            snake.pop();
+          }
+
+          draw();
+        }
+
+        function gameOver() {
+          running = false;
+          clearInterval(gameLoop);
+          overlay.classList.remove('hidden');
+          if (shareBtn) {
+            shareBtn.classList.add('show');
+            var tweetText = encodeURIComponent('I scored ' + score + ' on @ChaitanyaPatil_\u2019s portfolio Snake game \ud83d\udc0d Can you beat me?\n\nhttps://www.chaitanyapatil.online/');
+            shareBtn.href = 'https://twitter.com/intent/tweet?text=' + tweetText;
+          }
+          overlay.querySelector('.snake-emoji').textContent = '💀';
+          overlay.querySelector('.snake-title').textContent = 'Score: ' + score;
+          overlay.querySelector('.snake-subtitle').textContent = 'Skill issue honestly';
+        }
+
+        function start() {
+          if (running) return;
+          running = true;
+          init();
+          overlay.classList.add('hidden');
+          if (shareBtn) shareBtn.classList.remove('show');
+          gameLoop = setInterval(update, 110);
+        }
+
+        // Attach listeners
+        overlay.onclick = function(e) {
+          e.stopPropagation();
+          start();
+        };
+        
+        if (shareBtn) {
+          shareBtn.onclick = function(e) {
+            e.stopPropagation();
+          };
+        }
+
+        document.addEventListener('keydown', function(e) {
+          if (!running) return;
+          var key = e.key.toLowerCase();
+          if ((key === 'arrowup' || key === 'w') && dy !== 1) { dx = 0; dy = -1; e.preventDefault(); }
+          if ((key === 'arrowdown' || key === 's') && dy !== -1) { dx = 0; dy = 1; e.preventDefault(); }
+          if ((key === 'arrowleft' || key === 'a') && dx !== 1) { dx = -1; dy = 0; e.preventDefault(); }
+          if ((key === 'arrowright' || key === 'd') && dx !== -1) { dx = 1; dy = 0; e.preventDefault(); }
+        });
+
+        // Initial setup
+        resize();
         draw();
       }
 
-      function gameOver() {
-        running = false;
-        clearInterval(gameLoop);
-        overlay.querySelector('.snake-emoji').textContent = '\ud83d\udc80';
-        var deathMsgs = ['skill issue honestly', 'rip bozo', 'L + ratio + no snake skills', 'you had one job', 'my grandma plays better', 'snake_game.exe has stopped working', 'have you considered a different career', 'ctrl+z won\\'t save you here'];
-        overlay.querySelector('.snake-title').textContent = 'Score: ' + score;
-        overlay.querySelector('.snake-subtitle').textContent = deathMsgs[Math.floor(Math.random() * deathMsgs.length)];
-        // Show share button with tweet
-        var shareBtn = document.getElementById('snake-share');
-        var tweetText = encodeURIComponent('I scored ' + score + ' on @ChaitanyaPatil_\u2019s portfolio Snake game \ud83d\udc0d Can you beat me?\n\nhttps://www.chaitanyapatil.online/');
-        shareBtn.href = 'https://twitter.com/intent/tweet?text=' + tweetText;
-        shareBtn.classList.add('show');
-        overlay.classList.remove('hidden');
+      // Initialize after everything is ready
+      if (document.readyState === 'complete') {
+        initSnakeGame();
+      } else {
+        window.addEventListener('load', initSnakeGame);
       }
-
-      function start() {
-        if (running) return;
-        running = true;
-        init();
-        overlay.classList.add('hidden');
-        document.getElementById('snake-share').classList.remove('show');
-        overlay.querySelector('.snake-emoji').textContent = '\ud83d\udc0d';
-        overlay.querySelector('.snake-title').textContent = 'Snake';
-        overlay.querySelector('.snake-subtitle').textContent = 'Click to play';
-        gameLoop = setInterval(update, 110);
-      }
-
-      // Click to start/restart
-      overlay.addEventListener('click', function(e) { e.stopPropagation(); start(); });
-      card.addEventListener('click', function() { if (!running) start(); });
-
-      // Keyboard controls (only when game is active)
-      document.addEventListener('keydown', function(e) {
-        if (!running) return;
-        switch(e.key) {
-          case 'ArrowUp': case 'w': case 'W':
-            if (dy !== 1) { dx = 0; dy = -1; } e.preventDefault(); break;
-          case 'ArrowDown': case 's': case 'S':
-            if (dy !== -1) { dx = 0; dy = 1; } e.preventDefault(); break;
-          case 'ArrowLeft': case 'a': case 'A':
-            if (dx !== 1) { dx = -1; dy = 0; } e.preventDefault(); break;
-          case 'ArrowRight': case 'd': case 'D':
-            if (dx !== -1) { dx = 1; dy = 0; } e.preventDefault(); break;
-        }
-      });
-
-      // Touch swipe controls for mobile
-      var touchStartX = 0, touchStartY = 0;
-      card.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-      card.addEventListener('touchend', function(e) {
-        if (!running) return;
-        var diffX = e.changedTouches[0].clientX - touchStartX;
-        var diffY = e.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-          if (diffX > 20 && dx !== -1) { dx = 1; dy = 0; }
-          else if (diffX < -20 && dx !== 1) { dx = -1; dy = 0; }
-        } else {
-          if (diffY > 20 && dy !== -1) { dx = 0; dy = 1; }
-          else if (diffY < -20 && dy !== 1) { dx = 0; dy = -1; }
-        }
-      }, { passive: true });
-
-      // Pause when card is off-screen
-      var cardObserver = new IntersectionObserver(function(entries) {
-        if (!entries[0].isIntersecting && running) {
-          clearInterval(gameLoop);
-          running = false;
-          overlay.classList.remove('hidden');
-        }
-      }, { threshold: 0.1 });
-      cardObserver.observe(card);
-
-      // Handle resize
-      window.addEventListener('resize', function() {
-        if (!running) { resize(); draw(); }
-      });
-
-      // Initial draw
-      init();
-      draw();
     })();
   </script>
 
